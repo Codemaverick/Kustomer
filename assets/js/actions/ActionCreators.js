@@ -4,7 +4,7 @@
 
 import { TransactionTypes } from '../constants/ActionTypes';
 
-function debitAccount(amount){
+export function debitAccount(amount){
     return {
         type: TransactionTypes.DEBIT,
         amount: amount,
@@ -12,7 +12,7 @@ function debitAccount(amount){
     };
 }
 
-function creditAccount(amount) {
+export function creditAccount(amount) {
     return {
         type: TransactionTypes.CREDIT,
         amount: amount,
