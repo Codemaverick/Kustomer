@@ -15,11 +15,24 @@ class Application{
         let unsubscribe = this.store.subscribe(this.run.bind(this));
         this.run();
         
-        this.store.dispatch(creditAccount(50));
-        this.store.dispatch(creditAccount(230));
-        this.store.dispatch(debitAccount(45));
-        this.store.dispatch(debitAccount(800));
-        this.store.dispatch(debitAccount(340));
+        let yr = new Date().getFullYear();
+        let counter = 0;
+        
+        let testCredits = [50, 230];
+        let testDebits = [45, 800, 340];
+        
+        testCredits.forEach((amt)=> {
+            let id =  `${yr}-${++counter}`;
+            this.store.dispatch(creditAccount(amt, id));
+            console.log(this.store.getState());
+        });
+        
+        testDebits.forEach((amt) => {
+             let id =  `${yr}-${++counter}`;
+             this.store.dispatch(debitAccount(amt, id));
+             console.log(this.store.getState());
+        });
+       
     }
     
     run() {
