@@ -8,7 +8,8 @@ const TransactionTypes  = {
 const RequestType = {
     CREDIT: 'request_credit',
     DEBIT: 'request_debit',
-    CANCEL: 'request_cancel'
+    CANCEL: 'request_cancel',
+    ERROR: 'request_error'
 };
 
 export const ADD_TRANSACTION = 'add_transaction';
