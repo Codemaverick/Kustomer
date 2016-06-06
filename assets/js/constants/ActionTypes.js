@@ -5,7 +5,13 @@ const TransactionTypes  = {
     TRANSFER: 'transfer'
 };
 
+const RequestType = {
+    CREDIT: 'request_credit',
+    DEBIT: 'request_debit',
+    CANCEL: 'request_cancel'
+};
+
 export const ADD_TRANSACTION = 'add_transaction';
 export const CANCEL_TRANSACTION = 'cancel_transaction';
 
-export { TransactionTypes };
+export { TransactionTypes, RequestType };
