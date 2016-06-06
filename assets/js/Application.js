@@ -1,26 +1,30 @@
 import { createStore } from 'redux';
 import BankApp from './reducers/Reducers';
 import { creditAccount, debitAccount } from './actions/actionCreators';
+import { Provider } from 'react-redux';
+import KustomerBank from './containers/KustomerBank';
+import React from 'react';
+import { render } from 'react-dom';
 
 
 class Application{
     constructor(){
-        const store = createStore(BankApp);
-        console.log(store.getState());
+        this.store = createStore(BankApp);
+        console.log(this.store.getState());
         
-        let unsubscribe = store.subscribe(() => {
-            console.log(store.getState()); 
-        });
+        let unsubscribe = this.store.subscribe(this.run.bind(this));
+        this.run();
         
-        store.dispatch(creditAccount(50));
-        store.dispatch(creditAccount(230));
-        store.dispatch(debitAccount(45));
-        store.dispatch(debitAccount(800));
-        store.dispatch(debitAccount(340));
+        this.store.dispatch(creditAccount(50));
+        this.store.dispatch(creditAccount(230));
+        this.store.dispatch(debitAccount(45));
+        this.store.dispatch(debitAccount(800));
+        this.store.dispatch(debitAccount(340));
     }
     
-    initialize() {
-        
+    run() {
+        let app_container = document.querySelector('#app_container');
+        render(<KustomerBank store={this.store} {...this.store.getState()} />, app_container);
         
     }
 }
