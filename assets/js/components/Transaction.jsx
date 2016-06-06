@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 
-const Transaction = (item) => {
+const Transaction = ({type, amount, date}) => {
+    const details = `${type} $${amount} ${date}`;
     return (
-        <li>`${item.type} ${item.amount} ${item.date.toString()} `</li>  
+        <li>{details}</li>  
     );
 }
 
