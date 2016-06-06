@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 const Transaction = (item) => {
     return (
@@ -7,7 +7,7 @@ const Transaction = (item) => {
 }
 
 Transaction.propTypes = {
-    item: React.propTypes.object  
+    item: PropTypes.object  
 };
 
 export default Transaction;
