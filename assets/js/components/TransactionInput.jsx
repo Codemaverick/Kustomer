@@ -6,28 +6,34 @@ class TransactionInput extends Component {
     }
 
     handleSubmitClick(e) {
-        const val = e.target.value.trim();
-        this.props.onSubmitClick(val);
+        const input = document.querySelector('#transaction_value');
+        this.props.onSubmitClick(input.value);
     }
+    
+    
 
     render() {
-        const { text, show} = this.props;
-        let item_class = 'row transaction-input';
-        item_class += show ? '' : ' hide';
+        const { text, error} = this.props;
+        let item_class = 'transaction-input';
 
         return (
             <div className={item_class}>
-                <div className="col-md-6">
-                    <label>{text}</label>
-                    <input type="text" value='' />
+                <div className="row">
+                    <div className="col-md-6">
+                        <label>{text}</label>
+                        <input type="text" id="transaction_value"  />
+                    </div>
+                    <div className="col-md-6">
+                        <button onClick={this.handleSubmitClick.bind(this)}>
+                            Submit
+                        </button>
+                        <a onClick={this.props.onCancelClick}>
+                            Cancel
+                        </a>
+                    </div>
                 </div>
-                <div className="col-md-6">
-                    <button onClick={this.handleSubmitClick}>
-                        Submit
-                    </button>
-                    <a onClick={this.props.onCancelClick}>
-                       Cancel
-                    </a>
+                <div className="row">
+                    <div className="col-md-12 error">{error}</div>
                 </div>
             </div>
         );
