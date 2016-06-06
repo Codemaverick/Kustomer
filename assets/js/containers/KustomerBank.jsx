@@ -4,24 +4,24 @@ import OverviewSection from '../components/OverviewSection';
 import TransactionListView from '../components/TransactionListView';
 import TransactionInput from '../components/TransactionInput';
 import MenuBar from '../components/MenuBar';
-import { 
-    debitAccount, 
-    creditAccount, 
-    requestCreditTransaction, 
+import {
+    debitAccount,
+    creditAccount,
+    requestCreditTransaction,
     requestDebitTransaction,
-    requestCancelTransaction 
+    requestCancelTransaction
 } from '../actions/ActionCreators';
 
 
 class KustomerBank extends Component {
-   renderOverviewSection() {
+    renderOverviewSection() {
         return (
             <section>
                 <OverviewSection currentBalance={this.props.balance} />
             </section>
         )
     }
-    
+
     renderMenuButtons() {
         return (
             <section id="menu">
@@ -32,8 +32,8 @@ class KustomerBank extends Component {
             </section>
         )
     }
-    
-     renderTransactionsList() {
+
+    renderTransactionsList() {
         const item_list = [];
         return (
             <section id="transactions">
@@ -41,20 +41,34 @@ class KustomerBank extends Component {
             </section>
         )
     }
-    
-     renderTransactionInput() {
+
+    renderTransactionInput() {
         return (
             <section id="transaction_input">
                 <TransactionInput
                     onSubmitClick={this.handleSubmitTransaction.bind(this) }
-                    onCancelClick={() => this.props.store.dispatch(requestCancelTransaction())}
+                    onCancelClick={() => this.props.store.dispatch(requestCancelTransaction()) }
                     show={this.props.transactionRequest.showTransactionInput}
                     text={this.props.transactionRequest.text}
                     />
             </section>
         )
     }
-    
+
+    handleDepositClick() {
+        console.log('deposit button clicked');
+        this.props.store.dispatch(requestCreditTransaction());
+    }
+
+    handleWithdrawalClick() {
+        console.log('withdrawal button clicked');
+        this.props.store.dispatch(requestDebitTransaction());
+    }
+
+    handleSubmitTransaction() {
+        console.log('handle submit transaction');
+    }
+
     render() {
         return (
             <div>
