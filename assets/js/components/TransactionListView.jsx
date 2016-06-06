@@ -5,7 +5,7 @@ const TransactionListView = (props) => {
     return (
         <ul className="transaction-list">
             {props.items.map((data_item) => {
-               return <Transaction item={data_item} key={item.id} />
+               return <Transaction {...data_item} key={data_item.id} />
             })}
         </ul>
     )
