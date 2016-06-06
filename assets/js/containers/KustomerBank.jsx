@@ -14,7 +14,25 @@ import {
 
 
 class KustomerBank extends Component {
-   
+   renderOverviewSection() {
+        return (
+            <section>
+                <OverviewSection currentBalance={this.props.balance} />
+            </section>
+        )
+    }
+    
+    renderMenuButtons() {
+        return (
+            <section id="menu">
+                <MenuBar
+                    onDepositClick={this.handleDepositClick.bind(this) }
+                    onWithdrawalClick={this.handleWithdrawalClick.bind(this) }
+                    />
+            </section>
+        )
+    }
+    
     render() {
         return (
             <div>
