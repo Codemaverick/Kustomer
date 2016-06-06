@@ -4,20 +4,27 @@ import OverviewSection from '../components/OverviewSection';
 import TransactionListView from '../components/TransactionListView';
 import TransactionInput from '../components/TransactionInput';
 import MenuBar from '../components/MenuBar';
+import { TransactionType, RequestType } from '../constants/ActionTypes';
 import {
     debitAccount,
     creditAccount,
     requestCreditTransaction,
     requestDebitTransaction,
-    requestCancelTransaction
+    requestCancelTransaction,
+    transactionError
 } from '../actions/ActionCreators';
 
 
 class KustomerBank extends Component {
+    constructor(props) {
+        super(props);
+        this.counter = 0;    
+    }
+    
     renderOverviewSection() {
         return (
             <section>
-                <OverviewSection currentBalance={this.props.balance} />
+                <OverviewSection currentBalance={this.props.account.balance} />
             </section>
         )
     }
@@ -34,25 +41,31 @@ class KustomerBank extends Component {
     }
 
     renderTransactionsList() {
-        const item_list = [];
         return (
             <section id="transactions">
-                <TransactionListView items={item_list} />
+                <TransactionListView items={this.props.account.transactions} />
             </section>
         )
     }
 
     renderTransactionInput() {
-        return (
-            <section id="transaction_input">
-                <TransactionInput
-                    onSubmitClick={this.handleSubmitTransaction.bind(this) }
-                    onCancelClick={() => this.props.store.dispatch(requestCancelTransaction()) }
-                    show={this.props.transactionRequest.showTransactionInput}
-                    text={this.props.transactionRequest.text}
-                    />
-            </section>
-        )
+        const { store, transactionRequest } = this.props;
+        if (transactionRequest.showTransactionInput){
+            return (
+                <section id="transaction_input">
+                    <TransactionInput
+                        onSubmitClick={this.handleSubmitTransaction.bind(this) }
+                        onCancelClick={() => store.dispatch(requestCancelTransaction()) }
+                        text={transactionRequest.text}
+                        error={transactionRequest.error}
+                        />
+                </section>
+            )
+        }
+        else {
+            return (<section id="transaction_input"></section>)
+        }
+        
     }
 
     handleDepositClick() {
@@ -65,8 +78,30 @@ class KustomerBank extends Component {
         this.props.store.dispatch(requestDebitTransaction());
     }
 
-    handleSubmitTransaction() {
+    handleSubmitTransaction(value) {
         console.log('handle submit transaction');
+        const { account, transactionRequest, store } = this.props;
+        const transaction_amt = parseFloat(value);
+        if (isNaN(transaction_amt)) {
+            store.dispatch(transactionError("Please enter a valid number"));
+        }
+        else if ((transactionRequest.currentRequest === RequestType.DEBIT) && (value > account.balance)) {
+            store.dispatch(transactionError('Not enough funds to complete transaction'));
+        }
+        else {
+            let current = new Date().getFullYear();
+            let next_id = `${current}-${++this.counter}`;
+            switch(transactionRequest.currentRequest) {
+                case RequestType.CREDIT:
+                    store.dispatch(creditAccount(transaction_amt, next_id));
+                    break;
+                    
+                case RequestType.DEBIT:
+                    store.dispatch(debitAccount(transaction_amt, next_id));
+                    break;
+            }
+        }
+        
     }
 
     render() {
