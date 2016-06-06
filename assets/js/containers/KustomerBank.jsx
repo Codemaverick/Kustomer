@@ -33,6 +33,15 @@ class KustomerBank extends Component {
         )
     }
     
+     renderTransactionsList() {
+        const item_list = [];
+        return (
+            <section id="transactions">
+                <TransactionListView items={item_list} />
+            </section>
+        )
+    }
+    
     render() {
         return (
             <div>
