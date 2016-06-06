@@ -42,6 +42,19 @@ class KustomerBank extends Component {
         )
     }
     
+     renderTransactionInput() {
+        return (
+            <section id="transaction_input">
+                <TransactionInput
+                    onSubmitClick={this.handleSubmitTransaction.bind(this) }
+                    onCancelClick={() => this.props.store.dispatch(requestCancelTransaction())}
+                    show={this.props.transactionRequest.showTransactionInput}
+                    text={this.props.transactionRequest.text}
+                    />
+            </section>
+        )
+    }
+    
     render() {
         return (
             <div>
